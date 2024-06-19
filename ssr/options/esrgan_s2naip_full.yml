@@ -56,7 +56,7 @@ test_datasets:
      phase: test
      scale: 4
 
-     sentinel2_path: super_resolution_2023-12-08/small_val_set/sentinel2
+     sentinel2_path: sentinel2/sentinel_2023/stitched
      naip_path: super_resolution_2023-12-08/small_val_set/naip
 
      use_shuffle: False
@@ -69,7 +69,7 @@ test_datasets:
 # Network Structures
 network_g:
   type: SSR_RRDBNet
-  num_in_ch: 36  # number of Sentinel2 images * 3 channels (RGB)
+  num_in_ch: 24  # number of Sentinel2 images * 3 channels (RGB)
   num_out_ch: 3
   num_feat: 64
   num_block: 23
@@ -77,14 +77,14 @@ network_g:
 
 network_d:
   type: SSR_UNetDiscriminatorSN
-  num_in_ch: 3
+  num_in_ch: 27
   num_feat: 64
   skip_connection: True
 
 # Load in existing weights to the generator and discriminator
 # Uncomment pretrain_network_g and pretrain_network_d and add paths to your weights
 path:
-  #pretrain_network_g: experiments/sample_net_g.pth 
+  pretrain_network_g: esrgan_8S2.pth
   param_key_g: params_ema
   strict_load_g: true
   #pretrain_network_d: experiments/sample_net_d.pth 

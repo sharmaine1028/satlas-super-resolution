@@ -43,8 +43,7 @@ if __name__ == "__main__":
     print("Running inference on ", len(pngs), " images.")
 
     for i,png in enumerate(pngs):
-
-        save_dir = os.path.join(save_path, str(i))
+        save_dir = os.path.join(save_path, str(png).split("/")[-1][:-4])
         os.makedirs(save_dir, exist_ok=True)
 
         im = skimage.io.imread(png)
@@ -55,7 +54,7 @@ if __name__ == "__main__":
 
         # Save the low-res input image in the same dir as the super-res image so
         # it is easy for the user to compare.
-        skimage.io.imsave(save_dir + '/lr.png', s2_image)
+        skimage.io.imsave(save_dir + '/lr.png', im)
 
         # Convert the model output back to a numpy array and adjust shape and range.
         output = torch.clamp(output, 0, 1)
